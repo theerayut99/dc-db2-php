@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+    db2:
+        build: ./db2
+        restart: always
+        privileged: true
+        ports:
+            - '50003:50000'
+        volumes:
+            - './data:/database'
+        env_file:
+            - './config/.env_list'
+        ipc: host
+        
+
+    fpm:
+        build: ./fpm
+        volumes:
+            - "./www:/var/www/html"
+            - "./config/fpm.ini:/usr/local/etc/php/php.ini"
